@@ -204,10 +204,11 @@ nav{
 .photo-divider-cap{position:absolute; left:0; right:0; bottom:0; z-index:2; display:flex; align-items:center; gap:14px; padding:26px 64px}
 .photo-divider-cap .bar{display:none}
 .photo-divider-cap span{color:var(--cream); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; font-weight:500}
-.photo-divider-cap.photo-divider-quote{align-items:flex-start}
-.photo-divider-quote .pd-quote-text{font-family:var(--serif); font-style:italic; font-weight:400; font-size:clamp(17px,2vw,22px); color:var(--cream); line-height:1.4; margin:0 0 6px}
-.photo-divider-quote .pd-quote-attr{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin:0; font-weight:500}
-@media (max-width:760px){.photo-divider{height:34vh; min-height:220px} .photo-divider-cap{padding:20px 24px}}
+.photo-divider-quote-below{background:var(--navy); text-align:center; padding:28px 24px 36px}
+.photo-divider-quote-below .pd-quote-text{font-family:var(--serif); font-style:italic; font-weight:400; font-size:clamp(17px,2vw,22px); color:var(--cream); line-height:1.4; margin:0 auto 6px; max-width:640px}
+.photo-divider-quote-below .pd-quote-attr{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); margin:0; font-weight:500; text-align:center}
+.photo-divider-rounded{border-radius:14px}
+@media (max-width:760px){.photo-divider{height:34vh; min-height:220px} .photo-divider-cap{padding:20px 24px} .photo-divider-quote-below{padding:22px 20px 28px}}
 
 /* ---------- start-ups audience band (home) ---------- */
 .audience-band{background:var(--ice); padding:60px 64px; text-align:center}
@@ -591,7 +592,7 @@ const TEMPLATES = {
         <div class="strip-item"><span class="strip-num serif">20+</span><span class="strip-label">Years Impact &amp; Sustainability Investing Leadership</span></div>
         <div class="strip-item"><span class="strip-num serif">€350M+</span><span class="strip-label">Impact Funds Managed</span></div>
         <div class="strip-item"><span class="strip-num serif">€100Bn+</span><span class="strip-label">Institutional Capital Advised</span></div>
-        <div class="strip-item"><span class="strip-num serif">200+</span><span class="strip-label">Global Panels &amp; Keynotes Delivered</span></div>
+        <div class="strip-item"><span class="strip-num serif">100+</span><span class="strip-label">Global Panels &amp; Keynotes Delivered</span></div>
       </div>
     </div>
 
@@ -614,9 +615,9 @@ const TEMPLATES = {
     </div>
 
     <div class="photo-divider photo-divider-full">
-      <img src="${PHOTO_ALPINE_LAKE}" alt="Mountains mirrored in a still alpine lake — systemic investing that reflects real planetary boundaries">
-      <div class="photo-divider-cap photo-divider-quote"><span class="bar"></span><div><p class="pd-quote-text">&ldquo;We do not inherit the Earth from our ancestors, we borrow it from our children.&rdquo;</p><p class="pd-quote-attr">&mdash; Native American Proverb</p></div></div>
+      <img class="photo-divider-rounded" src="${PHOTO_ALPINE_LAKE}" alt="Mountains mirrored in a still alpine lake — systemic investing that reflects real planetary boundaries">
     </div>
+    <div class="photo-divider-quote-below"><p class="pd-quote-text">&ldquo;We do not inherit the Earth from our ancestors, we borrow it from our children.&rdquo;</p><p class="pd-quote-attr">&mdash; Native American Proverb</p></div>
 
     ${ctaBand()}
   `,
@@ -713,8 +714,8 @@ const TEMPLATES = {
 
     <div class="photo-divider">
       <img src="${PHOTO_DUNE_PATH}" alt="A path opening onto the horizon at sunrise — the impact investing journey from strategy to measurable outcomes">
-      <div class="photo-divider-cap photo-divider-quote"><span class="bar"></span><div><p class="pd-quote-text">&ldquo;The journey of a thousand miles begins with a single step.&rdquo;</p><p class="pd-quote-attr">&mdash; Lao Tzu</p></div></div>
     </div>
+    <div class="photo-divider-quote-below"><p class="pd-quote-text">&ldquo;The journey of a thousand miles begins with a single step.&rdquo;</p><p class="pd-quote-attr">&mdash; Lao Tzu</p></div>
 
     <div class="work-section">
       <div class="wrap" style="padding-inline:0; text-align:center">
@@ -752,8 +753,8 @@ const TEMPLATES = {
 
     <div class="photo-divider photo-divider-full">
       <img src="${PHOTO_TUNNEL_LIGHT_FULL}" alt="A full stone archway opening onto golden evening light over an open field — start-ups stepping through into their next stage of growth">
-      <div class="photo-divider-cap photo-divider-quote"><span class="bar"></span><div><p class="pd-quote-text">&ldquo;If you can dream it, you can do it.&rdquo;</p><p class="pd-quote-attr">&mdash; Walt Disney</p></div></div>
     </div>
+    <div class="photo-divider-quote-below"><p class="pd-quote-text">&ldquo;If you can dream it, you can do it.&rdquo;</p><p class="pd-quote-attr">&mdash; Walt Disney</p></div>
 
     ${ctaBand()}
   `,
@@ -830,8 +831,8 @@ const TEMPLATES = {
 
     <div class="photo-divider">
       <img src="${PHOTO_BAY_BOATS}" alt="Vessels at anchor in a still bay — steady, well-governed capital for institutional and family office clients">
-      <div class="photo-divider-cap photo-divider-quote"><span class="bar"></span><div><p class="pd-quote-text">&ldquo;Systemic change happens one investment at a time.&rdquo;</p><p class="pd-quote-attr">&mdash; Antony Bugg-Levine</p></div></div>
     </div>
+    <div class="photo-divider-quote-below"><p class="pd-quote-text">&ldquo;Systemic change happens one investment at a time.&rdquo;</p><p class="pd-quote-attr">&mdash; Antony Bugg-Levine</p></div>
 
     ${ctaBand()}
   `,
