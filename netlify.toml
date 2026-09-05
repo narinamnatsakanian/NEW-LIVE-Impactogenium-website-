@@ -1,0 +1,4 @@
+[build]
+  publish = "."
+
+# No build command needed — index.html is a static, self-contained file.

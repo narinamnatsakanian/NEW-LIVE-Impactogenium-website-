@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Impactogenium — Independent Impact Investing Advisory</title>
 <meta name="description" content="Impactogenium is an independent impact investing advisory practice led by Narina Mnatsakanian, advising institutional investors, family offices, and start-ups on impact strategy, sustainability, ESG governance, and global supply chain due diligence.">
 <meta name="robots" content="index, follow">
@@ -345,6 +350,11 @@ a.inline-link:hover{text-decoration-thickness:2px}
 }
 .form-row input:focus, .form-row select:focus, .form-row textarea:focus{outline:none; border-color:var(--azure)}
 .form-row textarea{resize:vertical; min-height:110px}
+.hp-field{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+.form-status{margin-top:14px; font-size:13.5px; font-weight:500; min-height:1.2em}
+.form-status.is-sending{color:var(--azure)}
+.form-status.is-success{color:#1e7d4a}
+.form-status.is-error{color:#b3311c}
 .panel-book{background:linear-gradient(160deg, var(--navy) 0%, var(--ocean) 100%); color:var(--cream); display:flex; flex-direction:column}
 .panel-book h3{color:var(--cream)}
 .panel-book p{font-size:14.5px; font-weight:300; line-height:1.75; color:var(--text-on-dark); margin-bottom:24px}
@@ -383,7 +393,8 @@ footer{background:var(--ink); padding:56px 64px 22px}
   .team-head{flex-wrap:wrap}
 }
 </style>
-
+</head>
+<body>
 <nav>
   <button class="nav-logo" id="nav-logo-btn" data-nav="home" aria-label="Impactogenium — Home"></button>
   <div class="nav-links" id="nav-links"></div>
@@ -395,6 +406,29 @@ footer{background:var(--ink); padding:56px 64px 22px}
 <div class="mobile-menu" id="mobile-menu"></div>
 
 <main id="app"></main>
+
+<!-- Static form for Netlify's build-time form detection. Netlify's crawler only reads
+     literal HTML in this file — it never executes the JS that renders the real contact
+     page — so this hidden duplicate (same name + fields) is what registers the "contact"
+     form in the Netlify dashboard and enables submission notifications. It is never shown
+     to visitors and never submitted directly; the live form on the Contact page (in
+     TEMPLATES.contact) submits to this same form name via fetch(). -->
+<form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="Name">
+  <input type="text" name="Organization">
+  <input type="email" name="Email">
+  <select name="Inquiry Type">
+    <option>Institutional Investor Advisory</option>
+    <option>Venture / Startup Advisory</option>
+    <option>Speaking Engagement</option>
+    <option>Board / IC Role</option>
+    <option>Coaching</option>
+    <option>Media or Research</option>
+    <option>Other</option>
+  </select>
+  <textarea name="Message"></textarea>
+  <input name="bot-field">
+</form>
 
 <footer>
   <div class="footer-grid">
@@ -564,6 +598,42 @@ function render(){
   if(page==='clients'){
     requestAnimationFrame(()=>drawContour(document.getElementById('contour-clients'), {seed:7, dark:true}));
   }
+  if(page==='contact'){
+    setupContactForm();
+  }
+}
+
+/* ============================================================
+   CONTACT FORM — Netlify Forms submission via fetch (no page reload)
+   ============================================================ */
+function encodeFormData(data){
+  return Object.keys(data).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(data[k])).join('&');
+}
+function setupContactForm(){
+  const form = document.getElementById('contact-form');
+  if(!form) return;
+  const status = document.getElementById('contact-form-status');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const data = {};
+    new FormData(form).forEach((value, key)=>{ data[key] = value; });
+    status.textContent = 'Sending…';
+    status.className = 'form-status is-sending';
+    fetch('/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: encodeFormData(data)
+    })
+    .then(()=>{
+      status.textContent = "Thank you — your inquiry has been sent. We'll be in touch shortly.";
+      status.className = 'form-status is-success';
+      form.reset();
+    })
+    .catch(()=>{
+      status.textContent = 'Something went wrong sending this — please email narina.mnatsakanian@gmail.com directly.';
+      status.className = 'form-status is-error';
+    });
+  });
 }
 
 /* ============================================================
@@ -925,7 +995,9 @@ const TEMPLATES = {
       <div class="contact-grid">
         <div class="panel">
           <h3 class="serif">Send an Inquiry</h3>
-          <form action="mailto:narina.mnatsakanian@gmail.com?subject=New%20Inquiry%20from%20Impactogenium%20Website" method="post" enctype="text/plain">
+          <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact">
+            <p class="hp-field"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
             <div class="form-row"><label>Name</label><input type="text" name="Name" placeholder="Your full name" required></div>
             <div class="form-row"><label>Organization</label><input type="text" name="Organization" placeholder="Company or institution"></div>
             <div class="form-row"><label>Email</label><input type="email" name="Email" placeholder="you@organization.com" required></div>
@@ -943,6 +1015,7 @@ const TEMPLATES = {
             </div>
             <div class="form-row"><label>Message</label><textarea name="Message" placeholder="What are you looking to achieve?"></textarea></div>
             <button type="submit" class="btn btn-dark">Submit Inquiry</button>
+            <p id="contact-form-status" class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
 
@@ -1232,5 +1305,5 @@ function initFlowCanvas(canvas){ initStarFlow(canvas, {count:96, speedMul:1, war
 
 render();
 </script>
-
-</body></html>
+</body>
+</html>
