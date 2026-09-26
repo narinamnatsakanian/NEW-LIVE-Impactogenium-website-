@@ -231,6 +231,7 @@ nav{
 /* ---------- services: journey intro ---------- */
 .journey-block{max-width:78ch}
 .journey-block p{font-size:16px; font-weight:300; line-height:1.9; color:var(--ocean); margin-bottom:18px}
+.journey-block.journey-centered{margin:0 auto; text-align:center}
 
 /* ---------- services: wheel ---------- */
 .wheel-section{background:linear-gradient(160deg, var(--navy) 0%, var(--midnight) 100%); padding:104px 64px; position:relative; overflow:hidden}
@@ -289,11 +290,11 @@ nav{
 /* ---------- clients ---------- */
 .client-grid{display:flex; flex-wrap:wrap; justify-content:center; gap:22px; margin-top:52px}
 .client-card{flex:0 0 calc((100% - 44px)/3)}
-.client-card{background:var(--white,#fff); background:#fff; border:1px solid rgba(10,24,56,0.08); border-top:3px solid var(--azure); border-radius:3px; padding:36px 30px; transition:transform .25s, box-shadow .25s}
+.client-card{background:var(--white,#fff); background:#fff; border:1px solid rgba(10,24,56,0.08); border-top:3px solid var(--azure); border-radius:3px; padding:24px 24px 22px; transition:transform .25s, box-shadow .25s}
 .client-card:hover{transform:translateY(-4px); box-shadow:0 16px 34px rgba(30,77,139,0.13)}
-.client-card .glyph{width:38px; height:38px; border-radius:50%; background:var(--ice); display:flex; align-items:center; justify-content:center; color:var(--ocean); margin-bottom:20px}
-.client-card h3{font-size:18px; font-weight:500; color:var(--navy); margin-bottom:10px; line-height:1.3}
-.client-card p{font-size:14px; font-weight:300; color:var(--ocean); line-height:1.7}
+.client-card .glyph{width:32px; height:32px; border-radius:50%; background:var(--ice); display:flex; align-items:center; justify-content:center; color:var(--ocean); margin-bottom:12px}
+.client-card h3{font-size:18px; font-weight:500; color:var(--navy); margin-bottom:6px; line-height:1.3}
+.client-card p{font-size:14px; font-weight:300; color:var(--ocean); line-height:1.55}
 @media (max-width:600px){.wheel-steps{grid-template-columns:1fr}}
 @media (max-width:760px){
   .client-grid{gap:10px}
@@ -321,6 +322,12 @@ nav{
 /* ---------- about ---------- */
 .about-intro{background:var(--cream); padding:96px 64px 40px}
 .about-intro .journey-block{margin:0 auto; text-align:left}
+.about-photo{background:var(--cream); padding:0 64px 24px}
+.about-photo-frame{position:relative; max-width:900px; margin:0 auto; border-radius:14px; overflow:hidden}
+.about-photo-frame img{display:block; width:100%; height:auto}
+.about-photo-frame::after{content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,24,56,0) 50%, rgba(10,24,56,0.6) 100%)}
+.about-photo-frame .photo-divider-cap{padding:20px 28px}
+@media (max-width:760px){.about-photo{padding:0 24px 16px}}
 .team-section{background:var(--cream); padding:40px 64px 104px}
 .partners-block{text-align:center; margin-bottom:56px; padding-bottom:44px; border-bottom:1px solid rgba(10,24,56,0.08); display:flex; flex-direction:column; align-items:center}
 .partner-logo{display:inline-flex; align-items:center; justify-content:center; border:1.5px solid rgba(10,24,56,0.15); border-radius:4px; padding:18px 34px; transition:border-color .2s, transform .2s; text-decoration:none}
@@ -655,7 +662,7 @@ const TEMPLATES = {
       <div class="hero-scrim"></div>
       <div class="hero-inner">
         <span class="hero-eyebrow">Independent Impact Advisory</span>
-        <h1 class="serif">Transforming Capital<br>for a <em>Better Future</em></h1>
+        <h1 class="serif">Transforming capital<br>for a <em>better future</em></h1>
         <p class="hero-tagline">Strategic impact advisory for institutional investors, deploying capital toward systemic change and addressing real-world challenges.</p>
         <div class="cta-row">
           <button class="btn btn-primary" data-nav="contact">Book a Call</button>
@@ -675,24 +682,6 @@ const TEMPLATES = {
       </div>
     </div>
 
-    <div class="audience-band">
-      <span class="eyebrow" style="margin-bottom:10px">For Start-Ups &amp; Scale-Ups</span>
-      <p class="audience-line">Impact advisory for mission-driven start-ups and scale-ups, sharpening their strategic focus and raising institutional capital for the first time.</p>
-      <div class="cta-row" style="justify-content:center; margin-top:24px">
-        <button class="btn btn-outline" data-nav="services-startups">Explore Advisory</button>
-      </div>
-    </div>
-
-    <div class="visual-panel">
-      <div class="hero-cloud">${cloudArt(2)}</div>
-      <div class="visual-panel-overlay">
-        <span class="eyebrow on-dark" style="margin-bottom:0">Where We Focus</span>
-        <div class="visual-tags">
-          <span>Climate Change</span><span>Biodiversity &amp; Nature</span><span>Circular Economy</span><span>Supply Chain Management</span><span>Social Issues</span>
-        </div>
-      </div>
-    </div>
-
     <div class="services-paths">
       <div class="wrap" style="padding-inline:0">
         <div class="home-section-head">
@@ -706,6 +695,21 @@ const TEMPLATES = {
         </div>
       </div>
     </div>
+
+    <div class="visual-panel">
+      <div class="hero-cloud">${cloudArt(2)}</div>
+      <div class="visual-panel-overlay">
+        <span class="eyebrow on-dark" style="margin-bottom:0">Where We Focus</span>
+        <div class="visual-tags">
+          <span>Climate Change</span><span>Biodiversity &amp; Nature</span><span>Circular Economy</span><span>Supply Chain Management</span><span>Social Issues</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="photo-divider photo-divider-full">
+      <img class="photo-divider-rounded" src="${PHOTO_ALPINE_LAKE}" alt="Mountains mirrored in a still alpine lake — systemic investing that reflects real planetary boundaries">
+    </div>
+    <div class="photo-divider-quote-below"><p class="pd-quote-text">&ldquo;We do not inherit the Earth from our ancestors, we borrow it from our children.&rdquo;</p><p class="pd-quote-attr">&mdash; Native American Proverb</p></div>
 
     <section class="content">
       <div class="home-section-head">
@@ -724,7 +728,7 @@ const TEMPLATES = {
         <img class="about-teaser-photo" src="${NARINA_PHOTO}" alt="Narina Mnatsakanian">
         <div class="about-teaser-body">
           <span class="eyebrow">Led by Narina Mnatsakanian</span>
-          <h2 class="section-title serif">Two Decades at the Intersection of Finance and Impact</h2>
+          <h2 class="section-title serif">Two decades at the intersection of finance and impact</h2>
           <p>Impactogenium works at the intersection of institutional finance and early-stage venture building — translating two decades of hands-on portfolio management, policy development, and investment experience into solutions our clients can implement.</p>
           <div class="cta-row">
             <button class="btn btn-primary" data-nav="about">Read Narina's Full Bio</button>
@@ -732,11 +736,6 @@ const TEMPLATES = {
         </div>
       </div>
     </div>
-
-    <div class="photo-divider photo-divider-full">
-      <img class="photo-divider-rounded" src="${PHOTO_ALPINE_LAKE}" alt="Mountains mirrored in a still alpine lake — systemic investing that reflects real planetary boundaries">
-    </div>
-    <div class="photo-divider-quote-below"><p class="pd-quote-text">&ldquo;We do not inherit the Earth from our ancestors, we borrow it from our children.&rdquo;</p><p class="pd-quote-attr">&mdash; Native American Proverb</p></div>
 
     ${ctaBand()}
   `,
@@ -751,7 +750,7 @@ const TEMPLATES = {
     </div>
 
     <section class="content">
-      <div class="journey-block">
+      <div class="journey-block journey-centered">
         <p>Impactogenium founder Narina Mnatsakanian has over 20 years of experience in impact investing and sustainability strategy. Our impact advisory and implementation services are designed to efficiently meet client needs and objectives throughout the impact investment process.</p>
         <p>Impactogenium's approach is built on Narina's track record across the United Nations Environment Programme, the Principles for Responsible Investment, UBS Asset Management, MN, EY, KPMG, and her current role as Partner and Chief Impact Officer at <a class="inline-link" href="https://regeneration.vc/" target="_blank" rel="noreferrer">Regeneration.VC</a>, advising and managing capital for financial institutions collectively responsible for billions in invested assets. Narina has a proven leadership record, having helped establish many of the foundational building blocks of the sustainable and impact investing industry. Impactogenium also maintains close working relationships with globally renowned impact and sustainability experts, who are brought in to deliver client projects as needed.</p>
         <p>For those new to impact investing, or those looking to strengthen their practice, we offer expert market intelligence, actionable recommendations, and hands-on support for becoming a best-in-class impact investor.</p>
@@ -926,9 +925,11 @@ const TEMPLATES = {
       </div>
     </section>
 
-    <div class="photo-divider">
-      <img src="${PHOTO_DUNE_GREEN}" alt="A river winding through a nature reserve — systemic thinking about natural capital and planetary boundaries">
-      <div class="photo-divider-cap"><span class="bar"></span><span>Systemic thinking, real ecosystems</span></div>
+    <div class="about-photo">
+      <div class="about-photo-frame">
+        <img src="${PHOTO_DUNE_GREEN}" alt="A river winding through a nature reserve — systemic thinking about natural capital and planetary boundaries">
+        <div class="photo-divider-cap"><span class="bar"></span><span>Systemic thinking, real ecosystems</span></div>
+      </div>
     </div>
 
     <section class="team-section">
@@ -950,23 +951,12 @@ const TEMPLATES = {
             </div>
           </div>
           <p class="team-quote">"Internationally recognized senior sustainability and impact investing leader working at the intersection of systemic investing, finance and nature."</p>
-          <p class="body">Narina brings over two decades of experience translating impact strategy into capital allocation and measurable outcomes — from executive ownership of institutional impact portfolios to hands-on venture investing. She advises institutional investors and family offices on sustainable and impact investment strategy, fund structuring, and governance, combining the rigour of large asset owners with the execution discipline of early-stage venture building.</p>
-          <p class="body">Her track record includes oversight of <strong>€10Bn+ in impact-labelled AUM</strong> as Global Head of Impact Investing at UBS Asset Management, co-founding and scaling the <strong>€300M Kempen Global Impact Pool</strong>, and currently, Narina is a Partner and Chief Impact Officer at <a class="inline-link" href="https://regeneration.vc/" target="_blank" rel="noreferrer">Regeneration.VC</a>'s <strong>$100M+ venture fund</strong>.</p>
-          <p class="body">Alongside her institutional work, Narina has mentored and coached founders throughout her career — through the BID Business Challenge, the Ashoka Philips Global Accelerator, and the UBS Visionaries Mentorship programme, as well as ongoing work with founders and boards of Regeneration.VC's portfolio companies. Narina is also a Fly-In advisor with <a class="inline-link" href="https://weareimpactcollective.org/" target="_blank" rel="noreferrer">We Are Impact Collective</a>, working alongside a network of impact professionals to support founders and institutional investors alike.</p>
+          <p class="body">For over twenty years, Narina has led the translation of impact strategy into capital allocation, first by building and running impact portfolios at major financial institutions and now by investing directly in early-stage ventures. She began her career at the United Nations in the early days of the Principles for Responsible Investment, where she led PRI Global Networks and Signatory Relations and helped grow the initiative's global signatory base. She went on to hold senior leadership roles at MN, Van Lanschot Kempen and UBS Asset Management. Today, Narina advises institutional investors and family offices on sustainable and impact investment strategy, fund structuring, impact measurement and governance. She brings the rigour of large asset owners together with the execution discipline of early-stage venture building.</p>
+          <p class="body">At Van Lanschot Kempen, Narina co-founded the €300M Kempen Global Impact Pool, scaled it and co-managed it. She also helped launch the €400M+ Kempen SDG Farmland Fund and served on its investment committee. As Global Head of Impact Investing at UBS Asset Management, she oversaw €10Bn+ in impact-labelled AUM, shaped the firm's direct impact strategies in infrastructure equity, private debt and nature-based solutions, and helped launch its infrastructure funds. As Partner and Chief Impact Officer at <a class="inline-link" href="https://regeneration.vc/" target="_blank" rel="noreferrer">Regeneration.VC</a>, she directs impact strategy and measurement across a $100M+ venture fund and plays an active role in fundraising, deal sourcing and portfolio support.</p>
+          <p class="body">Narina has mentored and coached founders throughout her career, through the BID Business Challenge, the Ashoka Philips Global Accelerator and the UBS Visionaries Mentorship programme, and she works closely with the founders and boards of Regeneration.VC's portfolio companies. As a Fly-In advisor with <a class="inline-link" href="https://weareimpactcollective.org/" target="_blank" rel="noreferrer">We Are Impact Collective</a>, she supports founders and institutional investors alongside a network of senior impact professionals. She also serves on the board and the Audit and Finance Committee of Natuurmonumenten, the Netherlands' largest nature conservation organisation.</p>
+          <p class="body">Her leadership has been recognised with a place among the Top 50 Women in Dutch Sustainable Finance, the ICGN Stewardship Disclosure Award, the Responsible Investor Award, the Pensions for Purpose Award and the Environmental Finance IMPACT Award.</p>
           <div class="timeline">
             <a class="btn btn-outline" href="https://www.linkedin.com/in/narina-mnatsakanian/" target="_blank" rel="noreferrer">View Full Profile on LinkedIn</a>
-          </div>
-          <div class="awards-block">
-            <h3 class="serif">Awards &amp; Recognition</h3>
-            <ul class="awards-list">
-              <li><span class="awards-year serif">2022</span><span class="awards-name">Top 50 Women in Dutch Sustainable Finance</span></li>
-              <li><span class="awards-year serif">2021</span><span class="awards-name">Top 50 Women in Dutch Sustainable Finance</span></li>
-              <li><span class="awards-year serif">2021</span><span class="awards-name">Pensions for Purpose Award</span></li>
-              <li><span class="awards-year serif">2021</span><span class="awards-name">Environmental Finance IMPACT Award</span></li>
-              <li><span class="awards-year serif">2020</span><span class="awards-name">ICGN Stewardship Disclosure Award</span></li>
-              <li><span class="awards-year serif">2018</span><span class="awards-name">Responsible Investor Award</span></li>
-            </ul>
-            <p class="awards-note">100+ global keynotes and panels delivered.</p>
           </div>
         </div>
       </div>
