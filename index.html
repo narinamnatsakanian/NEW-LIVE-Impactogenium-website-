@@ -165,10 +165,11 @@ nav{
 .cta-row{display:flex; gap:14px; flex-wrap:wrap}
 :focus-visible{outline:2px solid var(--azure); outline-offset:2px}
 
-/* ---------- hero (canvas motion field) ---------- */
+/* ---------- hero (soft cloud art) ---------- */
 .hero{position:relative; background:var(--navy); overflow:hidden; padding-top:60px}
-#flow-canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
-.hero-scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,24,56,0.35) 0%, rgba(10,24,56,0.55) 55%, var(--navy) 100%)}
+.hero-cloud{position:absolute; inset:0; width:100%; height:100%; overflow:hidden}
+.cloud-art{position:absolute; inset:0; width:100%; height:100%; display:block}
+.hero-scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,24,56,0.12) 0%, rgba(10,24,56,0.38) 55%, var(--navy) 100%)}
 .hero-inner{position:relative; z-index:2; max-width:900px; margin:0 auto; padding:120px 40px 108px; text-align:center}
 .hero-eyebrow{display:inline-block; font-size:12px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,169,97,0.4); padding:7px 16px; border-radius:999px; margin-bottom:28px}
 .hero-inner h1{font-size:clamp(38px,6vw,68px); font-weight:500; line-height:1.1; letter-spacing:-0.02em; color:var(--cream); margin-bottom:22px}
@@ -188,9 +189,9 @@ nav{
 .strip-label{font-size:12px; color:rgba(248,246,240,0.6); letter-spacing:0.02em}
 @media (max-width:760px){.strip-item{border-right:none; padding:6px 16px}}
 
-/* ---------- generative visual panels (contour) ---------- */
+/* ---------- generative visual panels (contour / cloud) ---------- */
 .visual-panel{position:relative; height:320px; overflow:hidden; background:var(--navy)}
-.visual-panel canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+.visual-panel canvas, .visual-panel .cloud-art{position:absolute; inset:0; width:100%; height:100%; display:block}
 .visual-panel-overlay{position:relative; z-index:2; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:16px}
 .visual-tags{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:640px}
 .visual-tags span{font-size:12.5px; letter-spacing:0.04em; color:var(--cream); border:1px solid rgba(248,246,240,0.3); padding:9px 20px; border-radius:999px; background:rgba(10,24,56,0.35)}
@@ -301,6 +302,20 @@ nav{
   .client-card .glyph svg{width:14px; height:14px}
   .client-card h3{font-size:12px; margin-bottom:6px; line-height:1.25}
   .client-card p{font-size:10px; line-height:1.4}
+}
+
+/* ---------- home page preview sections ---------- */
+.home-section-head{max-width:720px; margin:0 auto 48px; text-align:center}
+.home-section-head .eyebrow{text-align:center}
+.home-section-head p{font-size:16px; font-weight:300; color:var(--ocean); line-height:1.7; margin-top:14px}
+.about-teaser{background:#fff; padding:96px 64px}
+.about-teaser-grid{display:grid; grid-template-columns:0.7fr 1.3fr; gap:56px; align-items:center; max-width:1100px; margin:0 auto}
+.about-teaser-photo{width:100%; aspect-ratio:1; border-radius:6px; object-fit:cover; border:2px solid var(--gold); display:block}
+.about-teaser-body p{font-size:16px; font-weight:300; color:var(--ocean); line-height:1.75; margin-bottom:22px}
+@media (max-width:760px){
+  .about-teaser{padding:56px 18px}
+  .about-teaser-grid{grid-template-columns:1fr; gap:28px; text-align:center}
+  .about-teaser-photo{max-width:220px; margin:0 auto}
 }
 
 /* ---------- about ---------- */
@@ -434,7 +449,7 @@ footer{background:var(--ink); padding:56px 64px 22px}
   <div class="footer-grid">
     <div>
       <span class="footer-logo" id="footer-logo-slot"></span>
-      <p class="footer-tagline">Independent impact advisory firm bridging institutional rigor with entrepreneurial execution.</p>
+      <p class="footer-tagline">Independent impact advisory firm bridging institutional rigour with entrepreneurial execution.</p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -573,7 +588,7 @@ const PAGE_META = {
   'services-startups': {title:'Start-Up Advisory — Impactogenium', desc:'Impact thesis, go-to-market strategy, measurement frameworks, and fundraising support for mission-driven start-ups and scale-ups.'},
   'services-ecosystem': {title:'Ecosystem Work — Impactogenium', desc:'Investment committee and board roles, mentorship, founder coaching, and field-building across the impact investing community.'},
   clients: {title:'Clients — Impactogenium', desc:'Asset managers, asset allocators, start-ups, foundations, and corporations advised by Impactogenium on impact and sustainability strategy.'},
-  about: {title:'About — Impactogenium', desc:'Meet Narina Mnatsakanian, founder of Impactogenium, and the practice bridging institutional rigor with entrepreneurial execution.'},
+  about: {title:'About — Impactogenium', desc:'Meet Narina Mnatsakanian, founder of Impactogenium, and the practice bridging institutional rigour with entrepreneurial execution.'},
   contact: {title:'Contact — Impactogenium', desc:'Book a discovery call or send an inquiry to Impactogenium, an independent impact investing advisory practice.'},
   privacy: {title:'Privacy Policy — Impactogenium', desc:'How Impactogenium collects, uses, and protects personal data in line with the GDPR.'},
 };
@@ -589,12 +604,6 @@ function render(){
   document.title = meta.title;
   const metaDesc = document.querySelector('meta[name="description"]');
   if(metaDesc) metaDesc.setAttribute('content', meta.desc);
-  if(page==='home'){
-    requestAnimationFrame(()=>{
-      initFlowCanvas(document.getElementById('flow-canvas'));
-      initStarFlow(document.getElementById('contour-home'), {count:46, speedMul:0.7, warmup:70, bg:'#0a1838'});
-    });
-  }
   if(page==='clients'){
     requestAnimationFrame(()=>drawContour(document.getElementById('contour-clients'), {seed:7, dark:true}));
   }
@@ -642,7 +651,7 @@ function setupContactForm(){
 const TEMPLATES = {
   home: ()=>`
     <div class="hero">
-      <canvas id="flow-canvas"></canvas>
+      <div class="hero-cloud">${cloudArt(1)}</div>
       <div class="hero-scrim"></div>
       <div class="hero-inner">
         <span class="hero-eyebrow">Independent Impact Advisory</span>
@@ -659,27 +668,67 @@ const TEMPLATES = {
 
     <div class="strip">
       <div class="strip-row">
-        <div class="strip-item"><span class="strip-num serif">20+</span><span class="strip-label">Years Impact &amp; Sustainability Investing Leadership</span></div>
-        <div class="strip-item"><span class="strip-num serif">€350M+</span><span class="strip-label">Impact Funds Managed</span></div>
-        <div class="strip-item"><span class="strip-num serif">€100Bn+</span><span class="strip-label">Institutional Capital Advised</span></div>
-        <div class="strip-item"><span class="strip-num serif">100+</span><span class="strip-label">Global Panels &amp; Keynotes Delivered</span></div>
+        <div class="strip-item"><span class="strip-num serif">20+</span><span class="strip-label">years in senior leadership roles in impact and sustainable investing</span></div>
+        <div class="strip-item"><span class="strip-num serif">€350M+</span><span class="strip-label">impact AUM managed</span></div>
+        <div class="strip-item"><span class="strip-num serif">€100Bn+</span><span class="strip-label">institutional capital advised</span></div>
+        <div class="strip-item"><span class="strip-num serif">100+</span><span class="strip-label">Speaker and moderator at international panels and keynotes</span></div>
       </div>
     </div>
 
     <div class="audience-band">
       <span class="eyebrow" style="margin-bottom:10px">For Start-Ups &amp; Scale-Ups</span>
-      <p class="audience-line">Impact advisory for mission-driven start-ups and scale-ups sharpening their strategic focus and raising institutional capital for the first time.</p>
+      <p class="audience-line">Impact advisory for mission-driven start-ups and scale-ups, sharpening their strategic focus and raising institutional capital for the first time.</p>
       <div class="cta-row" style="justify-content:center; margin-top:24px">
         <button class="btn btn-outline" data-nav="services-startups">Explore Advisory</button>
       </div>
     </div>
 
     <div class="visual-panel">
-      <canvas id="contour-home"></canvas>
+      <div class="hero-cloud">${cloudArt(2)}</div>
       <div class="visual-panel-overlay">
         <span class="eyebrow on-dark" style="margin-bottom:0">Where We Focus</span>
         <div class="visual-tags">
           <span>Climate Change</span><span>Biodiversity &amp; Nature</span><span>Circular Economy</span><span>Supply Chain Management</span><span>Social Issues</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="services-paths">
+      <div class="wrap" style="padding-inline:0">
+        <div class="home-section-head">
+          <span class="eyebrow">What We Do</span>
+          <h2 class="section-title serif">Impact Advisory, End to End</h2>
+          <p>From institutional strategy and due diligence to fundraising support for mission-driven founders — three paths, one practice.</p>
+        </div>
+        ${servicesPathsGrid()}
+        <div class="cta-row" style="justify-content:center; margin-top:44px">
+          <button class="btn btn-ghost" data-nav="services">View All Services</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="content">
+      <div class="home-section-head">
+        <span class="eyebrow">Who We Work With</span>
+        <h2 class="section-title serif">Clients</h2>
+        <p>From institutional entrants and established managers to early-stage founders building for impact.</p>
+      </div>
+      ${clientGrid()}
+      <div class="cta-row" style="justify-content:center; margin-top:44px">
+        <button class="btn btn-ghost" data-nav="clients">Meet All Client Types</button>
+      </div>
+    </section>
+
+    <div class="about-teaser">
+      <div class="about-teaser-grid">
+        <img class="about-teaser-photo" src="${NARINA_PHOTO}" alt="Narina Mnatsakanian">
+        <div class="about-teaser-body">
+          <span class="eyebrow">Led by Narina Mnatsakanian</span>
+          <h2 class="section-title serif">Two Decades at the Intersection of Finance and Impact</h2>
+          <p>Impactogenium works at the intersection of institutional finance and early-stage venture building — translating two decades of hands-on portfolio management, policy development, and investment experience into solutions our clients can implement.</p>
+          <div class="cta-row">
+            <button class="btn btn-primary" data-nav="about">Read Narina's Full Bio</button>
+          </div>
         </div>
       </div>
     </div>
@@ -711,26 +760,7 @@ const TEMPLATES = {
 
     <div class="services-paths">
       <div class="wrap" style="padding-inline:0">
-        <div class="services-paths-grid">
-          <button class="services-path-card" data-nav="services-investors">
-            <span class="wheel-num serif" style="color:var(--gold-dark)">01</span>
-            <h3 class="serif">Investor Services</h3>
-            <p>Strategy development, impact management systems, due diligence, and reporting for institutional investors and family offices.</p>
-            <span class="services-path-link">Explore Investor Services &#8594;</span>
-          </button>
-          <button class="services-path-card" data-nav="services-startups">
-            <span class="wheel-num serif" style="color:var(--gold-dark)">02</span>
-            <h3 class="serif">Start-Ups &amp; Scale-Ups</h3>
-            <p>Impact thesis, go-to-market strategy, measurement frameworks, and fundraising support for mission-driven founders.</p>
-            <span class="services-path-link">Explore Start-Up Advisory &#8594;</span>
-          </button>
-          <button class="services-path-card" data-nav="services-ecosystem">
-            <span class="wheel-num serif" style="color:var(--gold-dark)">03</span>
-            <h3 class="serif">Ecosystem Work</h3>
-            <p>Governance roles, mentorship, and field-building that connect Impactogenium's practice to the wider impact investing community.</p>
-            <span class="services-path-link">Explore Ecosystem Work &#8594;</span>
-          </button>
-        </div>
+        ${servicesPathsGrid()}
       </div>
     </div>
 
@@ -870,33 +900,7 @@ const TEMPLATES = {
     </div>
 
     <section class="content">
-      <div class="client-grid">
-        <div class="client-card">
-          <div class="glyph">${iconBuilding()}</div>
-          <h3>Asset Managers</h3>
-          <p>Traditional and alternative managers building or scaling Article 8/9-aligned impact strategies across asset classes.</p>
-        </div>
-        <div class="client-card">
-          <div class="glyph">${iconLayers()}</div>
-          <h3>Asset Allocators</h3>
-          <p>Pension funds, insurers, and family offices setting systemic impact mandates and selecting managers against impact criteria.</p>
-        </div>
-        <div class="client-card">
-          <div class="glyph">${iconSprout()}</div>
-          <h3>Start-ups &amp; Pioneers</h3>
-          <p>Seed-to-Series-A climate tech, circular economy, and nature tech ventures preparing for institutional capital.</p>
-        </div>
-        <div class="client-card">
-          <div class="glyph">${iconHeart()}</div>
-          <h3>Foundations &amp; Non-Profits</h3>
-          <p>Mission-driven organizations deploying capital and measuring outcomes against programmatic goals.</p>
-        </div>
-        <div class="client-card">
-          <div class="glyph">${iconGrid()}</div>
-          <h3>Corporations</h3>
-          <p>Enterprises embedding circularity and impact management into strategy, operations, and reporting.</p>
-        </div>
-      </div>
+      ${clientGrid()}
     </section>
 
     <div class="photo-divider">
@@ -912,7 +916,7 @@ const TEMPLATES = {
       <div class="page-header-inner">
         <span class="hero-eyebrow" style="margin-bottom:20px;display:inline-block">About</span>
         <h1 class="serif">What We Do</h1>
-        <p>Impactogenium is an independent impact advisory firm bridging institutional rigor with entrepreneurial execution.</p>
+        <p>Impactogenium is an independent impact advisory firm bridging institutional rigour with entrepreneurial execution.</p>
       </div>
     </div>
 
@@ -946,18 +950,11 @@ const TEMPLATES = {
             </div>
           </div>
           <p class="team-quote">"Internationally recognized senior sustainability and impact investing leader working at the intersection of systemic investing, finance and nature."</p>
-          <p class="body">Narina brings over two decades of experience translating impact strategy into capital allocation and measurable outcomes — from executive ownership of institutional impact portfolios to hands-on venture investing. She advises institutional investors and family offices on sustainable and impact investment strategy, fund structuring, and governance, combining the rigor of large asset owners with the execution discipline of early-stage venture building.</p>
-          <p class="body">Her track record includes oversight of <strong>€10Bn+ in impact-labelled AUM</strong> as Global Head of Impact Investing at UBS Asset Management, co-founding and scaling the <strong>€250M+ Kempen Global Impact Pool</strong>, and currently co-leading fundraising and impact governance for <a class="inline-link" href="https://regeneration.vc/" target="_blank" rel="noreferrer">Regeneration.VC</a>'s <strong>$100M+ venture fund</strong> as Partner and Chief Impact Officer.</p>
-          <p class="body">Alongside her institutional work, Narina has mentored and coached founders throughout her career — through the BID Business Challenge, the Ashoka Philips Global Accelerator, and the UBS Visionaries Mentorship programme, as well as ongoing work with Regeneration.VC's portfolio companies. She is also a Fly-In advisor with <a class="inline-link" href="https://weareimpactcollective.org/" target="_blank" rel="noreferrer">We Are Impact Collective</a>, working alongside a network of impact professionals to support founders and investors alike.</p>
+          <p class="body">Narina brings over two decades of experience translating impact strategy into capital allocation and measurable outcomes — from executive ownership of institutional impact portfolios to hands-on venture investing. She advises institutional investors and family offices on sustainable and impact investment strategy, fund structuring, and governance, combining the rigour of large asset owners with the execution discipline of early-stage venture building.</p>
+          <p class="body">Her track record includes oversight of <strong>€10Bn+ in impact-labelled AUM</strong> as Global Head of Impact Investing at UBS Asset Management, co-founding and scaling the <strong>€300M Kempen Global Impact Pool</strong>, and currently, Narina is a Partner and Chief Impact Officer at <a class="inline-link" href="https://regeneration.vc/" target="_blank" rel="noreferrer">Regeneration.VC</a>'s <strong>$100M+ venture fund</strong>.</p>
+          <p class="body">Alongside her institutional work, Narina has mentored and coached founders throughout her career — through the BID Business Challenge, the Ashoka Philips Global Accelerator, and the UBS Visionaries Mentorship programme, as well as ongoing work with founders and boards of Regeneration.VC's portfolio companies. Narina is also a Fly-In advisor with <a class="inline-link" href="https://weareimpactcollective.org/" target="_blank" rel="noreferrer">We Are Impact Collective</a>, working alongside a network of impact professionals to support founders and institutional investors alike.</p>
           <div class="timeline">
-            <div><div class="timeline-org"><a class="inline-link" href="https://regeneration.vc/" target="_blank" rel="noreferrer">Regeneration.VC</a></div><div class="timeline-role">Partner &amp; Chief Impact Officer (2024–present) — co-leading European fundraising, portfolio value creation, and impact governance for a $100M+ venture fund across 34 portfolio companies.</div></div>
-            <div><div class="timeline-org">UBS Asset Management</div><div class="timeline-role">Global Head of Impact Investing (2023–2024) — oversight of €10Bn+ impact-labelled AUM across listed and private strategies.</div></div>
-            <div><div class="timeline-org">Natuurmonumenten</div><div class="timeline-role">Board Member, Finance &amp; Audit Committee (2023–present) — the largest nature conservation society in the Netherlands, 900,000+ members and a €200M+ investment portfolio.</div></div>
-            <div><div class="timeline-org">Van Lanschot Kempen</div><div class="timeline-role">Executive Director, Head of Sustainable &amp; Impact Investing (2017–2022) — co-founded and scaled the €250M+ Global Impact Pool; IC member for the €400M+ SDG Farmland Fund; advised Dutch and UK pension funds and family offices.</div></div>
-            <div><div class="timeline-org">Sarona Asset Management</div><div class="timeline-role">Director, Investor Relations Europe &amp; Head of ESG and Impact (2016–2017) — led European fundraising and impact due diligence for a frontier-markets fund of funds, engaging family offices, pension funds, and institutional investors.</div></div>
-            <div><div class="timeline-org">MN &amp; Dutch Pension Funds</div><div class="timeline-role">Senior Advisor, Responsible Investment and Governance (2012–2016) — advised on ESG integration and impact investing strategy across €120Bn+ AUM.</div></div>
-            <div><div class="timeline-org">United Nations (UNEP FI, PRI)</div><div class="timeline-role">Head of Networks and Global Signatory Relations (2007–2012) — built PRI's global network past 1,000 signatories representing $30 trillion in AUM across six markets.</div></div>
-            <div><div class="timeline-org">EY &amp; KPMG</div><div class="timeline-role">Advisory grounding across audit, assurance, and sustainability reporting for financial institutions.</div></div>
+            <a class="btn btn-outline" href="https://www.linkedin.com/in/narina-mnatsakanian/" target="_blank" rel="noreferrer">View Full Profile on LinkedIn</a>
           </div>
           <div class="awards-block">
             <h3 class="serif">Awards &amp; Recognition</h3>
@@ -983,7 +980,7 @@ const TEMPLATES = {
       <div class="page-header-inner">
         <span class="hero-eyebrow" style="margin-bottom:20px;display:inline-block">Contact</span>
         <h1 class="serif">Let's Start the <em>Conversation</em></h1>
-        <p>Ready to align your business and investments with planetary goals? Send an inquiry, or go straight to booking a discovery call.</p>
+        <p>Ready to align your business activities and investment philosophy with planetary goals? Book a discovery call.</p>
       </div>
     </div>
 
@@ -1069,6 +1066,104 @@ function ctaBand(){
         <button class="btn btn-ghost" data-nav="services">Explore Services</button>
       </div>
     </div>
+  `;
+}
+
+/* ============================================================
+   SHARED SECTION BLOCKS — the services-paths grid and the
+   client-type grid each have one definition here so the Home
+   page can show the same cards as their full pages (Home links
+   through to Services/Clients for the deeper content).
+   ============================================================ */
+function servicesPathsGrid(){
+  return `
+    <div class="services-paths-grid">
+      <button class="services-path-card" data-nav="services-investors">
+        <span class="wheel-num serif" style="color:var(--gold-dark)">01</span>
+        <h3 class="serif">Investor Services</h3>
+        <p>Strategy development, impact management systems, due diligence, and reporting for institutional investors and family offices.</p>
+        <span class="services-path-link">Explore Investor Services &#8594;</span>
+      </button>
+      <button class="services-path-card" data-nav="services-startups">
+        <span class="wheel-num serif" style="color:var(--gold-dark)">02</span>
+        <h3 class="serif">Start-Ups &amp; Scale-Ups</h3>
+        <p>Impact thesis, go-to-market strategy, measurement frameworks, and fundraising support for mission-driven founders.</p>
+        <span class="services-path-link">Explore Start-Up Advisory &#8594;</span>
+      </button>
+      <button class="services-path-card" data-nav="services-ecosystem">
+        <span class="wheel-num serif" style="color:var(--gold-dark)">03</span>
+        <h3 class="serif">Ecosystem Work</h3>
+        <p>Governance roles, mentorship, and field-building that connect Impactogenium's practice to the wider impact investing community.</p>
+        <span class="services-path-link">Explore Ecosystem Work &#8594;</span>
+      </button>
+    </div>
+  `;
+}
+function clientGrid(){
+  return `
+    <div class="client-grid">
+      <div class="client-card">
+        <div class="glyph">${iconBuilding()}</div>
+        <h3>Asset Managers</h3>
+        <p>Traditional and alternative managers building or scaling impact strategies across asset classes.</p>
+      </div>
+      <div class="client-card">
+        <div class="glyph">${iconLayers()}</div>
+        <h3>Asset Allocators</h3>
+        <p>Pension funds, insurers, and family offices setting systemic impact mandates and selecting managers against impact criteria.</p>
+      </div>
+      <div class="client-card">
+        <div class="glyph">${iconSprout()}</div>
+        <h3>Start-ups &amp; Pioneers</h3>
+        <p>Seed-to-Series-A climate tech, circular economy, and nature tech ventures preparing for institutional capital.</p>
+      </div>
+      <div class="client-card">
+        <div class="glyph">${iconHeart()}</div>
+        <h3>Foundations &amp; Non-Profits</h3>
+        <p>Mission-driven organizations deploying capital and measuring outcomes against programmatic goals.</p>
+      </div>
+      <div class="client-card">
+        <div class="glyph">${iconGrid()}</div>
+        <h3>Corporations</h3>
+        <p>Enterprises embedding circularity and impact management into strategy, operations, and reporting.</p>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   CLOUD ART — soft, static, brand-coloured cloud glow standing in
+   for the old moving-dot canvas. Layered blurred radial gradients
+   in gold/azure/sky over navy; no motion, no canvas, no JS timer.
+   ============================================================ */
+function cloudArt(seed){
+  const flip = seed===2;
+  return `
+    <svg class="cloud-art" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="cg${seed}a" cx="50%" cy="45%" r="65%">
+          <stop offset="0%" stop-color="#6ba3d4" stop-opacity="0.68"/>
+          <stop offset="55%" stop-color="#3071b9" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#0a1838" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="cg${seed}b" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#c9a961" stop-opacity="0.38"/>
+          <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="cg${seed}c" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stop-color="#eef4fa" stop-opacity="0.42"/>
+          <stop offset="100%" stop-color="#eef4fa" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="cb${seed}" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="30"/></filter>
+      </defs>
+      <g filter="url(#cb${seed})">
+        <ellipse cx="${flip?820:380}" cy="260" rx="380" ry="210" fill="url(#cg${seed}a)"/>
+        <ellipse cx="${flip?480:760}" cy="190" rx="270" ry="155" fill="url(#cg${seed}a)"/>
+        <ellipse cx="${flip?620:560}" cy="360" rx="320" ry="170" fill="url(#cg${seed}c)"/>
+        <ellipse cx="${flip?300:860}" cy="290" rx="210" ry="125" fill="url(#cg${seed}b)"/>
+        <ellipse cx="${flip?920:250}" cy="400" rx="190" ry="105" fill="url(#cg${seed}b)"/>
+      </g>
+    </svg>
   `;
 }
 
@@ -1212,96 +1307,6 @@ function drawContour(canvas, opts){
   ctx.fillStyle = vg;
   ctx.fillRect(0,0,w,h);
 }
-
-/* ============================================================
-   MOTION FIELD — canvas "capital flow / starfield" animation
-   standing in for the systemiq.earth video (Artifact CSP can't
-   serve an mp4). Drifting glowing points in brand gold/sky over
-   navy, trailing faint lines — reads as "moving stars." Warm-
-   started so trails are already built up on the very first
-   painted frame (resting-frame safe), and frozen to a static
-   equivalent under prefers-reduced-motion.
-   ============================================================ */
-function initStarFlow(canvas, opts){
-  if(!canvas || canvas.dataset.inited) return;
-  canvas.dataset.inited = '1';
-  const {count=90, speedMul=1, warmup=60, bg='#0a1838'} = opts||{};
-  const ctx = canvas.getContext('2d');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let w=0, h=0, dpr=1;
-
-  function resize(){
-    dpr = Math.min(window.devicePixelRatio||1, 2);
-    w = canvas.clientWidth; h = canvas.clientHeight;
-    canvas.width = Math.round(w*dpr); canvas.height = Math.round(h*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.fillStyle = bg;
-    ctx.fillRect(0,0,w,h);
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function field(x,y,t){
-    const a = Math.sin(x*0.006 + t*0.00035) + Math.cos(y*0.008 - t*0.00022);
-    const b = Math.cos(x*0.004 - t*0.00028) - Math.sin(y*0.005 + t*0.00040);
-    return Math.atan2(b,a);
-  }
-
-  if(reduced){
-    for(let i=0;i<Math.round(count*0.6);i++){
-      let x=Math.random()*w, y=Math.random()*h;
-      ctx.beginPath(); ctx.moveTo(x,y);
-      for(let s=0;s<26;s++){
-        const angle = field(x,y,0);
-        x += Math.cos(angle)*7; y += Math.sin(angle)*7;
-        ctx.lineTo(x,y);
-      }
-      const gold = i%4===0;
-      ctx.strokeStyle = gold ? 'rgba(201,169,97,0.42)' : 'rgba(107,163,212,0.3)';
-      ctx.lineWidth=1;
-      ctx.stroke();
-      ctx.beginPath(); ctx.arc(x,y,gold?1.8:1.3,0,Math.PI*2);
-      ctx.fillStyle = gold ? 'rgba(201,169,97,0.85)' : 'rgba(107,163,212,0.7)';
-      ctx.fill();
-    }
-    return;
-  }
-
-  const particles = Array.from({length:count}, ()=>({
-    x:Math.random()*w, y:Math.random()*h,
-    speed:(0.5+Math.random()*0.7)*speedMul,
-    gold:Math.random()>0.74,
-    r:0.9+Math.random()*1.3,
-  }));
-
-  function step(t){
-    ctx.fillStyle='rgba(10,24,56,0.065)';
-    ctx.fillRect(0,0,w,h);
-    particles.forEach(p=>{
-      const angle=field(p.x,p.y,t);
-      const nx=p.x+Math.cos(angle)*p.speed*1.5;
-      const ny=p.y+Math.sin(angle)*p.speed*1.5;
-      const line = p.gold ? 'rgba(201,169,97,0.5)' : 'rgba(107,163,212,0.34)';
-      ctx.strokeStyle = line;
-      ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(nx,ny); ctx.stroke();
-      p.x=nx; p.y=ny;
-      if(p.x<0||p.x>w||p.y<0||p.y>h){ p.x=Math.random()*w; p.y=Math.random()*h; }
-      // star point at the leading edge
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.gold ? 'rgba(230,205,150,0.95)' : 'rgba(180,210,235,0.85)';
-      ctx.fill();
-    });
-  }
-
-  // warm-start: run the sim ahead so the first painted frame already
-  // shows built-up trails and stars, not a blank fade-in
-  for(let k=0;k<warmup;k++) step(k*16);
-
-  (function loop(t){ step(t); requestAnimationFrame(loop); })(warmup*16);
-}
-function initFlowCanvas(canvas){ initStarFlow(canvas, {count:96, speedMul:1, warmup:70, bg:'#0a1838'}); }
 
 render();
 </script>
